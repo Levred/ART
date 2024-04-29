@@ -1,0 +1,13 @@
+Début
+# A START DELETE
+    A
+# elif B START DELETE
+    pas A
+    B
+# elif C START DELETE
+    pas A
+    B
+(()) else START DELETE
+    pas A
+    pas B
+# STOP DELETE

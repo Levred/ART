@@ -1,0 +1,7 @@
+Début
+pas A
+// C START DELETE
+C
+// else START DELETE
+pas C
+// C STOP DELETE

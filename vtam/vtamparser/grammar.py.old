@@ -1,0 +1,35 @@
+"""
+Grammaire du language de marqueur VTAM
+"""
+
+from parsimonious.grammar import Grammar
+
+def parse(text):
+
+    grammar = Grammar(
+        r"""
+        content = (block / inline / text)*
+        
+        block = block_start content block_stop
+        block_start = hws* "//" hws* expr " START DELETE" hws* nl
+        block_stop = hws* "//" hws* expr " STOP DELETE" hws* nl?
+
+        inline = inline_start inline_content inline_stop
+        inline_start = "<(" expr ")>"
+        inline_stop = "<(/" expr ")>" nl?
+        inline_content = (inline / text)+
+        
+        expr =  not / marqueur_id / par_expr 
+        par_expr = "(" expr ")"
+        not = "not " expr
+
+        marqueur_id = ~"\w+"
+        text = (!balise_marqueur (~"." / ws))*
+        balise_marqueur = inline_stop / inline_start / block_stop / block_start
+        nl = ~"\n"
+        ws = ~"\s"
+        hws = ~"[^\S\r\n]"
+        """
+    )
+    return grammar.parse(text)
+

@@ -1,0 +1,25 @@
+COURS DE MATHEMATIQUES SUR UNE NOTION
+
+INTRODUCTION :
+
+Propriétée 1: 
+Énoncé de la propriété 1
+Démonstration complète de la démonstration 1
+
+Propriétée 2: 
+Énoncé de la propriété 2
+Démonstration : admise
+
+Propriétée 3: 
+Énoncé de la propriété 3
+Démonstration complète de la démonstration 3
+
+Propriétée 4: 
+Énoncé de la propriété 4
+Démonstration complète de la démonstration 4
+
+Méthodes de résolution d'exercices
+
+Exemple d'utilistation de la methode1
+
+Exemple d'utilistation de la methode2

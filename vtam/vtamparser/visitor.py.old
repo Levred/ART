@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+from parsimonious.nodes import NodeVisitor, RegexNode
+
+class XcfilterVisitor(NodeVisitor):
+    """
+    Visiteur pour xcfilter.
+    Le constructeur prend pour argument le dictionnaire 
+    des marqueurs à appliquer
+    """
+    def __init__(self, marqueurs):
+        self.marqueurs = marqueurs
+        
+    def visit_content(self, node, visited_children):
+        """ Retourne le resultat de l'application des marqueurs """
+        output = ""
+        for child in visited_children:
+            output += child[0]
+
+        return output
+    
+    def visit_block(self, node, visited_children):
+        """ Retourne :
+                - le contenu du marqueur si celui-ci est True
+                - rien si le marqueur est False
+                - la version intermédiaire si le marqueur n'a pas été spécifié
+        """
+        eval_expr = visited_children[0]
+        contenu = visited_children[1]
+
+        if isinstance(eval_expr, str):
+            # Un des marqueurs de l'expression n'a pas ete spécifié
+            # on retourne la version intermédiaire du marqueur bloc
+            return "".join(visited_children)
+        elif eval_expr:
+            # On affiche le contenu du marqueur
+            return contenu
+        else: 
+            return ""
+
+    def visit_block_start(self, node, visited_children):
+        """ 
+        Retourne le resultat de l'evaluation de l'expression 
+        ou bien la version intermédiaire 
+        """
+        eval_expr = visited_children[3]
+        if isinstance(eval_expr, str):
+            # On doit retourner la version intermédiaire
+            return "".join(visited_children)
+        else:
+            return eval_expr
+
+    def visit_block_stop(self, node, visited_children):
+        """ 
+        Retourne le resultat de l'evaluation de l'expression 
+        ou bien la version intermédiaire 
+        """
+        eval_expr = visited_children[3]
+        if isinstance(eval_expr, str):
+            # On doit retourner la version intermédiaire
+            return "".join(visited_children)
+        else:
+            return eval_expr
+    
+    def visit_inline(self, node, visited_children):
+        
+        """ Retourne :
+                - le contenu du marqueur si celui-ci est True
+                - rien si le marqueur est False
+                - la version intermédiaire si le marqueur n'a pas été spécifié
+        """
+        eval_expr = visited_children[0]
+        contenu = visited_children[1]
+
+        if isinstance(eval_expr, str):
+            # Un des marqueurs de l'expression n'a pas ete spécifié
+            # on retourne la version intermédiaire du marqueur inline
+            return "".join(visited_children)
+        elif eval_expr:
+            # On affiche le contenu du marqueur
+            return contenu
+        else: 
+            return ""
+
+    def visit_inline_start(self, node, visited_children):
+        """ 
+        Retourne le resultat de l'evaluation de l'expression 
+        ou bien la version intermédiaire 
+        """
+        eval_expr = visited_children[1]
+        if isinstance(eval_expr, str):
+            return "".join(visited_children)
+        else:
+            return eval_expr
+
+    def visit_inline_stop(self, node, visited_children):
+        """ 
+        Retourne le resultat de l'evaluation de l'expression 
+        ou bien la version intermédiaire 
+        """
+        eval_expr = visited_children[1]
+        if isinstance(eval_expr, str):
+            return "".join(visited_children)
+        else:
+            return eval_expr
+    
+    def visit_inline_content(self, node, visited_children):
+        output = ""
+        for child in visited_children:
+            output += child[0]
+
+        return output
+
+    def visit_text(self, node, visited_children):
+        """ Retourne le texte contenu """
+        return node.text
+
+    def visit_expr(self, node, visited_children):
+        """ Retourne l'expression évaluée """
+        
+        return visited_children[0]
+
+    def visit_par_expr(self, node, visited_children):
+        
+        return visited_children[1]
+
+    def visit_not(self, node, visited_children):
+        """ 
+        Retourne la verison intermédiaire ou bien
+        l'expression après application de not 
+        """
+        eval_expr = visited_children[1]
+        if isinstance(eval_expr, str):
+            return "not " + eval_expr
+        else: 
+            return not eval_expr
+
+    def visit_marqueur_id(self, node, visited_children):
+        """ Retourne la valeur du marqueur si celui-ci est spécifié,
+        l'id du marqueur sinon"""
+        
+        marqueur_id = node.text
+        if marqueur_id in list(self.marqueurs):
+            return self.marqueurs[marqueur_id]
+        else:
+            return marqueur_id
+        
+    def generic_visit(self, node, visited_children):
+        if len(node.children) > 0 and isinstance(node.children[0], RegexNode):
+            # Pour les RegexNode on retourne directement le texte
+            # qui a match
+            return node.children[0].text
+        else:
+            return visited_children or node.text

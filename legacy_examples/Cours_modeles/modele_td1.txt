@@ -1,0 +1,39 @@
+Exercice 1:
+Consigne exercice
+<(AIDE)>indice pour la résolution<(/AIDE)>
+// Correction START DELETE 
+// methode1 START DELETE
+Correction via méthode 1
+ 
+// methode2 START DELETE
+Remarque quand au manque d'efficacité de la méthode 1
+
+// methode2 STOP DELETE
+// methode1 STOP DELETE
+// methode2 START DELETE
+Correction via méthode 2
+
+// methode2 STOP DELETE
+// STOP DELETE
+Exercice 2:
+// if PROPRIETE2 START DELETE
+Enoncer et démontrer la propriété 2 du cours
+// else START DELETE
+Enoncé de la propriété 2
+Démontrer cette propriété
+// STOP DELETE
+// AIDE START DELETE
+// DEMO_PARTIELLE2 START DELETE
+Vous pouvez vous inspirer de la methode suggérée dans le cours
+// else START DELETE
+Explication de l'idée de la démonstration
+// STOP DELETE
+// STOP DELETE
+
+// Correction START DELETE
+// DEMO2 START DELETE
+cf. cours
+// else START DELETE
+Demonstration de la propriété 2
+// STOP DELETE
+// STOP DELETE

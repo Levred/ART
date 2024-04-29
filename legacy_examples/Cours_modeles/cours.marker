@@ -1,0 +1,3 @@
+Implies(methode2,methode1)
+Implies(PROPRIETE4,PROPRIETE2)
+Implies(Correction,methode1)
