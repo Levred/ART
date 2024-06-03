@@ -1,3 +1,5 @@
+#définition des exceptions
+
 class InvalidUsage(Exception):
     pass
 

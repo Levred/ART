@@ -10,7 +10,6 @@ class VarVisitor(NodeVisitor):
         return variantes
 
     def visit_variante(self,node,visited_children):
-        
         variante_id = visited_children[1]
         param = []
         for mark in visited_children[5:]:
@@ -18,7 +17,6 @@ class VarVisitor(NodeVisitor):
         return variante_id,param
 
     def visit_marqueur(self,node,visited_children):
-        
         return visited_children[0]
 
     def visit_var(self, node, visted_children) :

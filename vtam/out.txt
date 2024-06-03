@@ -1,0 +1,170 @@
+# -*- coding: iso-8859-1 -*-
+# Constructeur
+# Les accesseurs
+#  galit  physique et logique
+# h ritage et red finition
+# en montrer un exemple
+# faire un groupe
+# classes abstraites ou interfaces ? voir abc Abstract Base (?) Class
+
+class ObjetGeometrique:
+	def translater(self, dx, dy):
+# NO_LEVE_EXCEPTION START DELETE
+		pass
+# NO_LEVE_EXCEPTION STOP DELETE
+	def __str__(self):
+# NO_LEVE_EXCEPTION START DELETE
+		pass
+# NO_LEVE_EXCEPTION STOP DELETE
+
+
+class Segment<(OG)>(ObjetGeometrique)<(/OG)>:
+	def __init__(self, e1: Point, e2: Point):
+		self.extremite1 = e1
+		self.extremite2 = e2
+
+	def __str__(self):
+		return f"[{self.extremite1} - {self.extremite2}]"
+
+	def translater(self, dx: float, dy: float):
+		self.extremite1.translater(dx, dy)
+		self.extremite2.translater(dx, dy)
+
+	def longueur(self):
+		return self.extremite1.distance(self.extremite2)
+
+
+
+def test_PointNommeDelegation():
+	pn = PointNommeDelegation('A', 10, 20)
+	assert pn.nom == 'A'
+	assert pn.x == 10
+	assert pn.y == 20
+	assert str(pn) == 'A:(10.0 ; 20.0)'
+	assert Point.__str__(pn) == '(10.0 ; 20.0)'
+	assert isinstance(pn, PointNommeDelegation)
+	assert not isinstance(pn, Point)
+
+
+def nsqrt(x, n):
+	""" compute n times the square root of x """
+	r = x
+	for i in range(n):
+		r = math.sqrt(r)
+	return r
+
+def nsquare(x, n):
+	""" compute n times the square of x """
+	r = x
+	for i in range(n):
+		r = r ** 2
+	return r
+
+def essai2():
+	n = 20
+	sq = nsqrt(2.0, n)
+	print('nsqrt(2.0, ', n, ') = ', sq)
+	sq2 = nsquare(sq, n)
+	print('nsquare --> ', sq2)
+
+p1 = None
+def setup_func():
+	global p1
+	p1 = Point(0, 2)
+
+def precision_test():
+	assert 2 == nsquare(nsqrt(2, 20), 20)
+
+
+# @with_setup(setup_func)
+def translater_test():
+	p1 = Point(0, 2)
+	print('p1 = ', p1)
+	p1.translater(2, 6)
+	assert p1.x == 2
+	assert p1.y == 8
+
+def translater2_test():
+	p1 = Point(0, 2)
+	print('p1 = ', p1)
+	p1.translater(2.5, 6.1)
+	print('p1 = ', p1)
+	assert p1.x == 2.5
+	assert p1.y == 8.1
+
+
+def exemple():
+	# cr er les points sommets du triangle
+# NO_AVEC_NOMS START DELETE
+	p1 = Point(3, 2)
+	p2 = Point(6, 9)
+# NO_AVEC_NOMS STOP DELETE
+	p3 = Point(11, 4)
+
+	# cr er les trois segments
+	s12 = Segment(p1, p2)
+	s23 = Segment(p2, p3)
+	s31 = Segment(p3, p1)
+
+	# cr er le barycentre
+	sx = (p1.x + p2.x + p3.x) / 3.0
+	sy = (p1.y + p2.y + p3.y) / 3.0
+# NO_AVEC_NOMS START DELETE
+	barycentre = Point(sx, sy)
+# NO_AVEC_NOMS STOP DELETE
+
+	# construire le sch ma
+	schema = [s12, s23, s31, barycentre];
+
+	# afficher le sch ma
+	for elt in schema:
+		print(elt)
+
+def essai():
+	p1 = Point(1, 2)
+	print(p1)
+
+	# Il y a bien composition entre Point et les r els repr sentants les attributs
+	p1bis = Point(p1.x, p1.y)
+	print(p1bis)
+	print('Notation imp rative : ', Point.__str__(p1))
+	p1bis.x = 2
+	print(p1)
+	print(p1bis)
+
+	p2 = Point(4, 6)
+	print(p2)
+	s12 = Segment(p1, p2)
+	print("s12 = {}, longueur = {}".format(s12, s12.longueur()))
+	print("distance(p1, p2) = {}" .format(p1.distance(p2)))
+	p2.translater(-3, 6)
+	print(p2)
+	print("s12 = {}, longueur = {}".format(s12, s12.longueur()))
+	print("distance(p1, p2) = {}" .format(p1.distance(p2)))
+	pn1 = PointNomme("A", 1, 2)
+	print("pn1 = {}".format(pn1))
+
+	s12bis = Segment(pn1, p2)
+	print('s12bis :', repr(s12bis))
+	print("s12bis = {}, longueur = {}".format(s12bis, s12bis.longueur()))
+	pn1.x = 5;
+	print("s12bis = {}, longueur = {}".format(s12bis, s12bis.longueur()))
+	s12bis.translater(0, 0);
+
+	q1 = Point(1, 2)
+	print("p1 == q1 : ", p1 == q1)
+	pn1 = PointNomme("A", 1, 2)
+	print("pn1 == q1 : ", pn1 == q1)
+	print("q1 == pn1 : ", q1 == pn1)
+	exemple()
+	og = ObjetGeometrique()
+
+
+if __name__ == "__main__":
+	import doctest
+	doctest.testmod()
+	exemple()
+	if False:
+		s = Segment(PointNomme('A', 1.0, 2.0), Point(1.0, 12.0))
+		print(s)
+		essai()

@@ -14,34 +14,24 @@ def parse(markers:list,variantes: dict[list] = None,marqueurs: dict = {},dejavu:
         {MARQUEUR_1: True/False, ... MARQUEUR_N: True/False}
     """
     for m in markers:
-        name = m[1:]
-        if m[0] == '+':
-            if name not in marqueurs.keys():
-                marqueurs[name] = True
-            elif report != None:
-                afficher_message(report, m, name)
-            else :
-                print(f'{m} has been ignored because {name} has been specified before')
-        elif m[0] == '-':
-            if name not in marqueurs.keys():
-                marqueurs[name] = False
-            elif report != None:
-                afficher_message(report, m, name)
-            else :
-                print(f'{m} has been ignored because {name} has been specified before')
-        elif m[0] == '@':
-            if variantes != None:
-                if name in dejavu.keys() :
-                    raise BadVariantFile(f'\nReccursion error while reading variant,@{name} has already been called, but it\'s called in {variant_name}')
-                else:
+        action, name = m[0], m[1:]
+        if action in '+-@':
+            if name not in marqueurs:
+                marqueurs[name] = (action == '+')
+                if action == '@' and variantes:
+                    if name in dejavu:
+                        raise BadVariantFile(f'\nRecursion error while reading variant,@{name} has already been called, but it\'s called in {variant_name}')
                     dejavu[name] = f'in @{variant_name}'
-                    parse(variantes[name],variantes,marqueurs,dejavu,name)
-
-            else :
-                raise NoVariantFile
+                    parse(variantes[name], variantes, marqueurs, dejavu, name)
+            else:
+                if report:
+                    afficher_message(report, m, name)
+                else:
+                    print(f'{m} has been ignored because {name} has been specified before')
         else:
             raise InvalidUsage()
     return marqueurs
+
 
 def afficher_message(report: Text, m:str, name:str) -> None:
     report.config(state='normal')
