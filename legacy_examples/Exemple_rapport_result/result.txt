@@ -1,4 +1,0 @@
-MARQUEURS UTILISES
-	-A
-	-B
-	-C

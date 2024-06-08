@@ -1,2 +1,0 @@
-Implies(Not(POLITE),SAD)
-Implies(IHM,POLITE)

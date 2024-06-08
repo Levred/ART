@@ -1,7 +1,0 @@
-Début
-A
-// B START DELETE
-B
-// else START DELETE
-pas B
-// B STOP DELETE

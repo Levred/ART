@@ -1,2 +1,0 @@
-Implies(AFFICHER_SOMME,SOMME)
-Implies(MODIF,SOMME)
