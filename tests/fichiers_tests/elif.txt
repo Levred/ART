@@ -1,0 +1,7 @@
+// A START DELETE
+A
+// elif B START DELETE
+B
+// elif C START DELETE
+C
+// STOP DELETE

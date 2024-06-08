@@ -1,0 +1,18 @@
+@MALPOLI :
+    - POLITE
+    + COUCOU
+    - IHM
+
+@QUIETGUY :
+    + POLITE
+    - IHM
+    + SAD
+
+@BUTIMHAPPY :
+    + POLITE
+    + IHM
+    - SAD
+
+@POLI :
+    @MALPOLI
+    +POLITE
